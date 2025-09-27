@@ -289,36 +289,44 @@ class AIService {
   }
 
   private getFallbackScore(answer: string, difficulty: string): number {
-    const answerLength = answer.trim().length;
-    const hasTechnicalTerms = /\b(react|javascript|node|api|database|component|function|variable|async|await|promise|hook|state|props)\b/i.test(answer);
-    
-    let baseScore = 5;
-    
-    // Adjust based on answer length
-    if (answerLength < 10) baseScore = 2;
-    else if (answerLength < 30) baseScore = 3;
-    else if (answerLength < 100) baseScore = 4;
-    else if (answerLength > 200) baseScore = 6;
-    
-    // Adjust based on technical content
-    if (hasTechnicalTerms) baseScore += 1;
-    
-    // Adjust based on difficulty
-    if (difficulty === 'easy') baseScore += 1;
-    else if (difficulty === 'hard') baseScore -= 1;
-    
-    return Math.max(1, Math.min(10, baseScore));
+  const answerText = answer.trim();
+  const answerLength = answerText.length;
+  // Detect absurd/random answers: only letters, no spaces, or gibberish
+  const isAbsurd = /^[a-zA-Z]{4,}$/.test(answerText) && !/\s/.test(answerText) && answerLength < 12;
+  // Detect if answer is just random letters or keyboard mashing
+  const isGibberish = /^(?:[a-zA-Z]{3,}\s?){2,}$/.test(answerText) && !/[.,;:!?]/.test(answerText) && answerLength < 20;
+  const hasTechnicalTerms = /\b(react|javascript|node|api|database|component|function|variable|async|await|promise|hook|state|props)\b/i.test(answerText);
+
+  if (isAbsurd || isGibberish) return 0;
+
+  let baseScore = 5;
+  // Adjust based on answer length
+  if (answerLength < 10) baseScore = 2;
+  else if (answerLength < 30) baseScore = 3;
+  else if (answerLength < 100) baseScore = 4;
+  else if (answerLength > 200) baseScore = 6;
+
+  // Adjust based on technical content
+  if (hasTechnicalTerms) baseScore += 1;
+
+  // Adjust based on difficulty
+  if (difficulty === 'easy') baseScore += 1;
+  else if (difficulty === 'hard') baseScore -= 1;
+
+  return Math.max(1, Math.min(10, baseScore));
   }
 
   private getFallbackFeedback(score: number, difficulty: string): string {
-    if (score >= 8) {
-      return `Excellent answer! You demonstrated strong understanding of the ${difficulty} level concept. Keep up the great work!`;
+    if (score === 0) {
+      return `Your answer was not relevant or was detected as random/absurd input. Please provide a meaningful, technical response to the question. Review the question carefully and avoid typing random letters or gibberish.`;
+    } else if (score >= 8) {
+      return `Excellent answer! You demonstrated strong understanding of the ${difficulty} level concept. Keep up the great work! For further improvement, try to relate your answer to real-world scenarios or recent technologies you have used.`;
     } else if (score >= 6) {
-      return `Good answer with solid understanding. Consider providing more specific examples or details to strengthen your response.`;
+      return `Good answer with solid understanding. To improve, provide more specific examples from your experience and elaborate on best practices relevant to the question.`;
     } else if (score >= 4) {
-      return `Your answer shows some understanding but could be improved. Try to be more specific and provide concrete examples.`;
+      return `Your answer shows some understanding but could be improved. Focus on being more specific, use technical terminology, and provide concrete examples from your work or studies.`;
     } else {
-      return `Your answer needs improvement. Consider reviewing the fundamentals and providing more detailed explanations.`;
+      return `Your answer needs improvement. Review the fundamentals for this topic and try to structure your response more clearly. Consider breaking down your answer into steps or key points for better clarity.`;
     }
   }
 
@@ -335,16 +343,17 @@ class AIService {
       }).join('\n');
 
       const prompt = `
-        Provide a comprehensive evaluation of this React/Node.js developer interview:
-        
+        You are an expert technical interviewer. Review the following interview Q&A and scores, and provide a tailored evaluation for the candidate:
+
         ${qaPairs}
-        
+
         Please provide:
         1. Overall score (0-100)
-        2. Brief summary (2-3 sentences)
-        3. Top 3 strengths
-        4. Top 3 areas for improvement
-        
+        2. Brief summary (2-3 sentences) that highlights specific strengths and weaknesses based on the answers
+        3. Top 3 strengths (tailored to what the candidate did well)
+        4. Top 3 areas for improvement (tailored to what the candidate struggled with or missed)
+        5. If any answer scored 0, mention that the candidate gave irrelevant or random input and recommend focusing on meaningful, technical responses in future interviews
+
         Return in JSON format:
         {
           "totalScore": number,

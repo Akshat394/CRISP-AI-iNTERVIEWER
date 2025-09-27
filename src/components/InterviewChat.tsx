@@ -161,14 +161,12 @@ const InterviewChat: React.FC<InterviewChatProps> = ({
               {currentQuestion.difficulty.toUpperCase()}
             </Tag>
           </div>
-          
           <Progress 
             percent={progress} 
             showInfo={false} 
             strokeColor="#667eea"
             style={{ height: '12px' }}
           />
-          
           <div className="timer-display" style={{ 
             fontSize: '1.2rem',
             fontWeight: '700',
@@ -187,34 +185,48 @@ const InterviewChat: React.FC<InterviewChatProps> = ({
 
       {/* Messages */}
       <div className="chat-messages">
-        {/* Previous Q&A pairs */}
-        {answers.map((answer, index) => {
+        {/* Show answers/explanations only after all questions are asked */}
+        {isInterviewCompleted && answers.map((answer, index) => {
           const question = questions[index];
           return (
-            <div key={index}>
+            <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               {/* AI Question */}
-              <div className="message ai">
-                <div className="message-bubble ai">
+              <div className="message ai" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                <div
+                  className="message-bubble ai"
+                  style={{
+                    background: 'linear-gradient(90deg, #e3eaf2 0%, #f5f5f7 100%)',
+                    borderRadius: 16,
+                    padding: '22px 24px',
+                    marginBottom: 10,
+                    boxShadow: '0 4px 16px rgba(25,118,210,0.08)',
+                    maxWidth: 700,
+                    width: '100%',
+                    minWidth: 280,
+                  }}
+                >
                   <Space align="start" style={{ width: '100%' }}>
-                    <RobotOutlined style={{ color: '#667eea', fontSize: '1.2rem', marginTop: 4 }} />
+                    <RobotOutlined style={{ color: '#1976d2', fontSize: '1.5rem', marginTop: 4 }} />
                     <div style={{ flex: 1 }}>
                       <div style={{ marginBottom: 8 }}>
-                        <Text strong style={{ color: 'var(--text-primary)' }}>Question {index + 1}:</Text>
+                        <Text strong style={{ color: '#1976d2', fontSize: '1.15rem' }}>Question {index + 1}:</Text>
                       </div>
-                      <div style={{ color: 'var(--text-primary)', lineHeight: 1.6 }}>{question.text}</div>
-                      <div style={{ marginTop: 12, display: 'flex', gap: 8, alignItems: 'center' }}>
+                      <div style={{ color: '#222', lineHeight: 1.7, fontSize: '1.12rem', fontWeight: 500 }}>{question.text}</div>
+                      <div style={{ marginTop: 10, display: 'flex', gap: 8, alignItems: 'center' }}>
                         <Tag 
                           style={{ 
                             background: getDifficultyColor(question.difficulty),
                             color: 'white',
                             border: 'none',
-                            borderRadius: '8px',
-                            fontWeight: '500'
+                            borderRadius: 8,
+                            fontWeight: 500,
+                            fontSize: '0.98rem',
+                            padding: '4px 12px'
                           }}
                         >
-                          {question.difficulty}
+                          {question.difficulty.toUpperCase()}
                         </Tag>
-                        <Text type="secondary" style={{ fontSize: 12 }}>• {question.category}</Text>
+                        <Text type="secondary" style={{ fontSize: '0.98rem', color: '#555' }}>• {question.category}</Text>
                       </div>
                     </div>
                   </Space>
@@ -222,21 +234,33 @@ const InterviewChat: React.FC<InterviewChatProps> = ({
               </div>
 
               {/* User Answer */}
-              <div className="message user">
-                <div className="message-bubble user">
+              <div className="message user" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                <div
+                  className="message-bubble user"
+                  style={{
+                    background: 'linear-gradient(90deg, #1976d2 0%, #00bcd4 100%)',
+                    borderRadius: 16,
+                    padding: '22px 24px',
+                    marginBottom: 22,
+                    boxShadow: '0 4px 16px rgba(25,118,210,0.12)',
+                    maxWidth: 700,
+                    width: '100%',
+                    minWidth: 280,
+                  }}
+                >
                   <Space align="start" style={{ width: '100%' }}>
-                    <UserOutlined style={{ color: 'white', fontSize: '1.2rem', marginTop: 4 }} />
+                    <UserOutlined style={{ color: '#fff', fontSize: '1.5rem', marginTop: 4 }} />
                     <div style={{ flex: 1 }}>
                       <div style={{ marginBottom: 8 }}>
-                        <Text strong style={{ color: 'white' }}>Your Answer:</Text>
+                        <Text strong style={{ color: '#fff', fontSize: '1.15rem' }}>Your Answer:</Text>
                       </div>
-                      <div style={{ color: 'white', lineHeight: 1.6 }}>{answer.text}</div>
+                      <div style={{ color: '#fff', lineHeight: 1.7, fontSize: '1.12rem', fontWeight: 500 }}>{answer.text}</div>
                       {answer.score && (
-                        <div style={{ marginTop: 12, padding: '8px 12px', background: 'rgba(255, 255, 255, 0.2)', borderRadius: '8px' }}>
-                          <Text style={{ color: 'white', fontWeight: '600' }}>Score: {answer.score}/10</Text>
+                        <div style={{ marginTop: 10, padding: '10px 14px', background: 'rgba(255,255,255,0.18)', borderRadius: 8 }}>
+                          <Text style={{ color: '#fff', fontWeight: 600 }}>Score: {answer.score}/10</Text>
                           {answer.feedback && (
                             <div style={{ marginTop: 6 }}>
-                              <Text style={{ color: 'rgba(255, 255, 255, 0.9)', fontStyle: 'italic' }}>{answer.feedback}</Text>
+                              <Text style={{ color: 'rgba(255,255,255,0.96)', fontStyle: 'italic' }}>{answer.feedback}</Text>
                             </div>
                           )}
                         </div>
@@ -249,34 +273,50 @@ const InterviewChat: React.FC<InterviewChatProps> = ({
           );
         })}
 
-        {/* Current Question */}
-        <div className="message ai">
-          <div className="message-bubble ai">
-            <Space align="start" style={{ width: '100%' }}>
-              <RobotOutlined style={{ color: '#667eea', fontSize: '1.2rem', marginTop: 4 }} />
-              <div style={{ flex: 1 }}>
-                <div style={{ marginBottom: 8 }}>
-                  <Text strong style={{ color: 'var(--text-primary)' }}>Question {currentQuestionIndex + 1}:</Text>
+        {/* Current Question (no answers/explanations until completed) */}
+        {!isInterviewCompleted && (
+          <div className="message ai" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <div
+              className="message-bubble ai"
+              style={{
+                background: 'linear-gradient(90deg, #e3eaf2 0%, #f5f5f7 100%)',
+                borderRadius: 16,
+                padding: '22px 24px',
+                marginBottom: 10,
+                boxShadow: '0 4px 16px rgba(25,118,210,0.08)',
+                maxWidth: 700,
+                width: '100%',
+                minWidth: 280,
+              }}
+            >
+              <Space align="start" style={{ width: '100%' }}>
+                <RobotOutlined style={{ color: '#1976d2', fontSize: '1.5rem', marginTop: 4 }} />
+                <div style={{ flex: 1 }}>
+                  <div style={{ marginBottom: 8 }}>
+                    <Text strong style={{ color: '#1976d2', fontSize: '1.15rem' }}>Question {currentQuestionIndex + 1}:</Text>
+                  </div>
+                  <div style={{ color: '#222', lineHeight: 1.7, fontSize: '1.12rem', fontWeight: 500 }}>{currentQuestion.text}</div>
+                  <div style={{ marginTop: 10, display: 'flex', gap: 8, alignItems: 'center' }}>
+                    <Tag 
+                      style={{ 
+                        background: getDifficultyColor(currentQuestion.difficulty),
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: 8,
+                        fontWeight: 500,
+                        fontSize: '0.98rem',
+                        padding: '4px 12px'
+                      }}
+                    >
+                      {currentQuestion.difficulty.toUpperCase()}
+                    </Tag>
+                    <Text type="secondary" style={{ fontSize: '0.98rem', color: '#555' }}>• {currentQuestion.category}</Text>
+                  </div>
                 </div>
-                <div style={{ color: 'var(--text-primary)', lineHeight: 1.6 }}>{currentQuestion.text}</div>
-                <div style={{ marginTop: 12, display: 'flex', gap: 8, alignItems: 'center' }}>
-                  <Tag 
-                    style={{ 
-                      background: getDifficultyColor(currentQuestion.difficulty),
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '8px',
-                      fontWeight: '500'
-                    }}
-                  >
-                    {currentQuestion.difficulty}
-                  </Tag>
-                  <Text type="secondary" style={{ fontSize: 12 }}>• {currentQuestion.category}</Text>
-                </div>
-              </div>
-            </Space>
+              </Space>
+            </div>
           </div>
-        </div>
+        )}
 
         <div ref={messagesEndRef} />
       </div>
@@ -288,19 +328,21 @@ const InterviewChat: React.FC<InterviewChatProps> = ({
             value={currentAnswer}
             onChange={(e) => setCurrentAnswer(e.target.value)}
             placeholder="Type your detailed answer here..."
-            rows={6}
+            rows={4}
             disabled={timer.isExpired}
             style={{
-              borderRadius: 'var(--border-radius)',
-              border: '3px solid rgba(255, 255, 255, 0.3)',
-              background: 'rgba(255, 255, 255, 0.15)',
-              backdropFilter: 'blur(15px)',
-              fontSize: 'var(--font-size-lg)',
-              padding: 'var(--spacing-xl)',
-              lineHeight: 'var(--line-height-relaxed)',
-              minHeight: '140px',
-              fontWeight: 'var(--font-weight-normal)',
-              color: 'var(--text-primary)'
+              borderRadius: '18px',
+              border: '2px solid #1976d2',
+              background: 'rgba(227, 234, 242, 0.85)',
+              fontSize: '1.15rem',
+              padding: '22px',
+              lineHeight: '1.7',
+              minHeight: '80px',
+              fontWeight: 500,
+              color: '#222',
+              boxShadow: '0 4px 16px rgba(25,118,210,0.10)',
+              marginBottom: '18px',
+              transition: 'border 0.2s, box-shadow 0.2s',
             }}
             onPressEnter={(e) => {
               if (e.shiftKey) return;
@@ -308,43 +350,33 @@ const InterviewChat: React.FC<InterviewChatProps> = ({
               handleSubmit();
             }}
           />
-          
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Text type="secondary" style={{ 
-              fontSize: 'var(--font-size-base)', 
-              color: 'var(--text-secondary)', 
-              fontWeight: 'var(--font-weight-medium)' 
-            }}>
-              💡 Press Enter to submit, Shift+Enter for new line
-            </Text>
-            
+          <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
             <Button
               type="primary"
               icon={<SendOutlined />}
               onClick={handleSubmit}
-              disabled={!currentAnswer.trim() || timer.isExpired}
-              loading={timer.isExpired}
-              size="large"
-              style={{ 
-                height: '64px',
-                borderRadius: 'var(--border-radius)',
-                fontSize: 'var(--font-size-lg)',
-                fontWeight: 'var(--font-weight-semibold)',
-                background: 'var(--success-gradient)',
+              disabled={timer.isExpired || !currentAnswer.trim()}
+              style={{
+                borderRadius: '24px',
+                fontWeight: 700,
+                fontSize: '1.18rem',
+                padding: '16px 48px',
+                marginTop: 0,
+                background: 'linear-gradient(90deg, #1976d2 0%, #00bcd4 100%)',
                 border: 'none',
-                padding: '0 var(--spacing-xxl)',
-                boxShadow: 'var(--shadow-soft)',
-                textTransform: 'uppercase',
-                letterSpacing: '0.5px'
+                boxShadow: '0 6px 24px rgba(25,118,210,0.18)',
+                color: '#fff',
+                transition: 'all 0.3s',
+                letterSpacing: '0.04em',
               }}
             >
-              {timer.isExpired ? 'Submitting...' : 'Submit Answer'}
+              Submit
             </Button>
           </div>
         </Space>
       </div>
     </div>
   );
-};
+}
 
 export default InterviewChat;

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Modal } from 'antd';
 import { Layout, Typography, Button, Space, Card, Alert, App, Avatar } from 'antd';
 import { UserOutlined, LogoutOutlined, PlayCircleOutlined, RocketOutlined, TrophyOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
@@ -30,6 +31,9 @@ const IntervieweePage: React.FC = () => {
   
   const [resumeData, setResumeData] = useState<ResumeData | null>(null);
   const [showWelcomeBack, setShowWelcomeBack] = useState(false);
+  const [showAnswersModal, setShowAnswersModal] = useState(false);
+  const handleShowAnswersModal = () => setShowAnswersModal(true);
+  const handleCloseAnswersModal = () => setShowAnswersModal(false);
 
   useEffect(() => {
     // Check for incomplete interview on page load
@@ -372,14 +376,52 @@ const IntervieweePage: React.FC = () => {
 
                 <div style={{ textAlign: 'center' }}>
                   <Space>
-                    <Button type="primary" onClick={() => navigate('/interviewer')}>
-                      View All Candidates
+                    <Button type="primary" onClick={handleShowAnswersModal}>
+                      View Full Answer Details
                     </Button>
                     <Button onClick={handleStartNewInterview}>
                       Take Another Interview
                     </Button>
                   </Space>
                 </div>
+
+                {/* Modal for full answer details */}
+                <Modal
+                  title="Interview Answer Details & Improvements"
+                  open={showAnswersModal}
+                  onCancel={handleCloseAnswersModal}
+                  footer={null}
+                  width={700}
+                >
+                  <Space direction="vertical" style={{ width: '100%' }} size="large">
+                    {currentSession.questions.map((q, idx) => {
+                      const ans = currentSession.answers[idx];
+                      return (
+                        <Card key={q.id} size="small" style={{ marginBottom: 12 }}>
+                          <Title level={5} style={{ marginBottom: 4 }}>Q{idx + 1}: {q.text}</Title>
+                          <Text type="secondary" style={{ fontSize: 13 }}>
+                            Difficulty: {q.difficulty} | Category: {q.category}
+                          </Text>
+                          <div style={{ marginTop: 8 }}>
+                            <Text strong>Your Answer:</Text>
+                            <div style={{ background: '#fafafa', borderRadius: 8, padding: 10, margin: '6px 0' }}>
+                              {ans?.text || <Text type="danger">No answer provided.</Text>}
+                            </div>
+                            <Text>Score: <b>{ans?.score ?? 'N/A'}/10</b></Text>
+                          </div>
+                          {ans?.feedback && (
+                            <div style={{ marginTop: 8 }}>
+                              <Text strong>Feedback & Suggestions:</Text>
+                              <div style={{ background: '#fffbe6', borderRadius: 8, padding: 10, marginTop: 4 }}>
+                                {ans.feedback}
+                              </div>
+                            </div>
+                          )}
+                        </Card>
+                      );
+                    })}
+                  </Space>
+                </Modal>
               </Space>
             </Card>
           )}

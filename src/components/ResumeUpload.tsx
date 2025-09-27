@@ -165,25 +165,35 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({
   }
 
   return (
-    <Card className="glass-card" style={{ padding: 'var(--spacing-xxl)' }}>
+    <Card className="glass-card" style={{
+      padding: 'var(--spacing-xxl)',
+      border: '3px solid #667eea',
+      boxShadow: '0 8px 32px rgba(102,126,234,0.15)',
+      borderRadius: '32px',
+      background: 'linear-gradient(135deg, #e0e7ff 0%, #fff 100%)',
+      position: 'relative',
+      zIndex: 2
+    }}>
       <Space direction="vertical" style={{ width: '100%' }} size="large">
         <div style={{ textAlign: 'center' }}>
-          <CloudUploadOutlined style={{ fontSize: '4rem', color: '#667eea', marginBottom: 'var(--spacing-lg)' }} />
+          <CloudUploadOutlined style={{ fontSize: '5rem', color: '#667eea', marginBottom: 'var(--spacing-lg)', filter: 'drop-shadow(0 2px 8px #667eea33)' }} />
           <Title level={2} style={{ 
-            color: 'var(--text-primary)', 
+            color: '#2d3748', 
             marginBottom: 'var(--spacing-md)', 
-            fontSize: 'var(--font-size-3xl)',
-            fontWeight: 'var(--font-weight-extrabold)'
+            fontSize: '2.5rem',
+            fontWeight: 800,
+            letterSpacing: '0.5px',
+            textShadow: '0 2px 8px #667eea22'
           }}>
             📄 Upload Your Resume
           </Title>
           <Text style={{ 
-            fontSize: 'var(--font-size-xl)', 
-            color: 'var(--text-secondary)', 
+            fontSize: '1.25rem', 
+            color: '#4a5568', 
             maxWidth: '700px', 
             margin: '0 auto', 
-            lineHeight: 'var(--line-height-relaxed)',
-            fontWeight: 'var(--font-weight-medium)'
+            lineHeight: '1.7',
+            fontWeight: 500
           }}>
             Upload your PDF or DOCX resume to get personalized interview questions tailored to your experience and skills.
           </Text>
@@ -221,32 +231,50 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({
         <Dragger 
           {...uploadProps}
           style={{
-            background: 'rgba(255, 255, 255, 0.08)',
-            border: '3px dashed rgba(255, 255, 255, 0.4)',
-            borderRadius: '24px',
-            padding: 'var(--spacing-xxl) var(--spacing-xl)',
-            minHeight: '200px',
-            transition: 'var(--transition)'
+            background: 'linear-gradient(135deg, #f0f5ff 0%, #e9e9ff 100%)',
+            border: '3px dashed #667eea',
+            borderRadius: '32px',
+            padding: '48px 32px',
+            minHeight: '220px',
+            boxShadow: '0 4px 16px #667eea22',
+            transition: 'var(--transition)',
+            marginTop: '16px',
+            marginBottom: '8px',
+            position: 'relative',
+            zIndex: 1
           }}
         >
           <p className="ant-upload-drag-icon">
-            <InboxOutlined style={{ fontSize: '4rem', color: '#667eea' }} />
+            <InboxOutlined style={{ fontSize: '5rem', color: '#667eea', filter: 'drop-shadow(0 2px 8px #667eea33)' }} />
           </p>
           <p className="ant-upload-text" style={{ 
-            color: 'var(--text-primary)', 
-            fontSize: 'var(--font-size-xl)', 
-            fontWeight: 'var(--font-weight-semibold)',
-            marginBottom: 'var(--spacing-sm)'
+            color: '#2d3748', 
+            fontSize: '1.5rem', 
+            fontWeight: 700,
+            marginBottom: '8px',
+            letterSpacing: '0.5px'
           }}>
             Click or drag file to this area to upload
           </p>
           <p className="ant-upload-hint" style={{ 
-            color: 'var(--text-secondary)',
-            fontSize: 'var(--font-size-lg)',
-            fontWeight: 'var(--font-weight-medium)'
+            color: '#4a5568',
+            fontSize: '1.1rem',
+            fontWeight: 500
           }}>
             Support for PDF and DOCX files. Maximum file size: 10MB
           </p>
+          <Button type="primary" icon={<CloudUploadOutlined />} size="large" style={{
+            marginTop: '18px',
+            fontWeight: 700,
+            fontSize: '1.1rem',
+            background: 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)',
+            border: 'none',
+            borderRadius: '12px',
+            boxShadow: '0 2px 8px #667eea33',
+            padding: '0 32px'
+          }}>
+            Upload Resume
+          </Button>
         </Dragger>
 
         <Divider style={{ borderColor: 'var(--glass-border)', margin: 'var(--spacing-lg) 0' }} />
