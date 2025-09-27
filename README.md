@@ -4,6 +4,14 @@
 
 ---
 
+<p align="center">
+  <img src="https://img.shields.io/badge/build-passing-brightgreen" />
+  <img src="https://img.shields.io/badge/license-MIT-blue" />
+  <img src="https://img.shields.io/badge/deployed-Vercel-black" />
+</p>
+
+---
+
 ## 🌟 Overview
 Crisp is a next-generation AI-powered interview assistant designed to help candidates ace their interviews and empower interviewers with actionable insights. Built for the Swipe Internship Assessment, Crisp delivers a seamless, real-world interview experience with modern UI, robust data persistence, and advanced AI features.
 
@@ -79,15 +87,19 @@ npm start
 
 ---
 
-## 🙌 Author & Contact
-- **Akshat394**
-- [LinkedIn](https://linkedin.com/in/yourprofile) *(replace with your actual link)*
-- [Email](mailto:your@email.com) *(replace with your actual email)*
+## 📸 Screenshots
+
+> Add screenshots here to showcase the UI and features. Example:
+>
+> ![Interviewee Chat](screenshots/interviewee-chat.png)
+> ![Interviewer Dashboard](screenshots/interviewer-dashboard.png)
 
 ---
 
-## 🏁 Submission
-- [Swipe Internship Submission Form](https://forms.gle/Yx5HGCQzHFmHF1wM6)
+## 🙌 Author & Contact
+- **Akshat394**
+- [LinkedIn](https://www.linkedin.com/in/akshat-trived1/)
+- [Email](mailto:akshattrivedi394@gmail.com)
 
 ---
 
