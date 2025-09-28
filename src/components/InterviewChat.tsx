@@ -356,19 +356,8 @@ const InterviewChat: React.FC<InterviewChatProps> = ({
               icon={<SendOutlined />}
               onClick={handleSubmit}
               disabled={timer.isExpired || !currentAnswer.trim()}
-              style={{
-                borderRadius: '24px',
-                fontWeight: 700,
-                fontSize: '1.18rem',
-                padding: '16px 48px',
-                marginTop: 0,
-                background: 'linear-gradient(90deg, #1976d2 0%, #00bcd4 100%)',
-                border: 'none',
-                boxShadow: '0 6px 24px rgba(25,118,210,0.18)',
-                color: '#fff',
-                transition: 'all 0.3s',
-                letterSpacing: '0.04em',
-              }}
+              className="btn-primary"
+              style={{ borderRadius: '24px', padding: '12px 36px', fontSize: '1.05rem' }}
             >
               Submit
             </Button>

@@ -95,12 +95,13 @@ const IntervieweePage: React.FC = () => {
     {
       title: 'Actions',
       key: 'actions',
-      render: (_: any, record: CandidateProfile) => (
+        render: (_: any, record: CandidateProfile) => (
         <Button
           type="primary"
           icon={<EyeOutlined />}
           onClick={() => setSelectedCandidate(record)}
           size="small"
+          className="btn-primary"
         >
           View Details
         </Button>
@@ -141,12 +142,13 @@ const IntervieweePage: React.FC = () => {
     {
       title: 'Actions',
       key: 'actions',
-      render: (_: any, record: InterviewSession) => (
+        render: (_: any, record: InterviewSession) => (
         <Button
           type="primary"
           icon={<EyeOutlined />}
           onClick={() => setSelectedSession(record)}
           size="small"
+          className="btn-primary"
         >
           View Session
         </Button>

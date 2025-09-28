@@ -57,7 +57,8 @@ const RoleSwitcher: React.FC<RoleSwitcherProps> = ({ onSelectRole }) => {
           <Button
             type="primary"
             size="large"
-            style={{ marginTop: 32, width: 240, fontWeight: 700, fontSize: '1.1rem', borderRadius: 16, background: 'linear-gradient(90deg, #0a7cff 0%, #00e0ff 100%)', border: 'none' }}
+            className="btn-primary"
+            style={{ marginTop: 32, width: 240, fontWeight: 700, fontSize: '1.1rem', borderRadius: 16 }}
             onClick={() => { onSelectRole(selectedRole); setVisible(false); }}
           >
             Continue as {selectedRole === 'interviewee' ? 'Interviewee' : 'Interviewer'}

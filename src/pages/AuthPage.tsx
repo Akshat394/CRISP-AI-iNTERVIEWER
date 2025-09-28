@@ -18,17 +18,17 @@ const AuthPage: React.FC = () => {
 
   const features = [
     {
-      icon: <RocketOutlined style={{ fontSize: '24px', color: '#64ffda' }} />,
+      icon: <RocketOutlined className="feature-icon" />,
       title: 'AI-Powered Interviews',
       description: 'Experience realistic interview simulations with our advanced AI technology'
     },
     {
-      icon: <CheckCircleOutlined style={{ fontSize: '24px', color: '#64ffda' }} />,
+      icon: <CheckCircleOutlined className="feature-icon" />,
       title: 'Instant Feedback',
       description: 'Get detailed feedback and insights to improve your interview performance'
     },
     {
-      icon: <SafetyOutlined style={{ fontSize: '24px', color: '#64ffda' }} />,
+      icon: <SafetyOutlined className="feature-icon" />,
       title: 'Secure Platform',
       description: 'Your data is protected with enterprise-grade security measures'
     }
@@ -71,18 +71,33 @@ const AuthPage: React.FC = () => {
       <div className="swipe-auth-hero-bg" />
       <div className="swipe-auth-hero-content">
         <div className="swipe-auth-brand">
-          <Avatar size={80} style={{ background: 'var(--primary-gradient)', boxShadow: '0 4px 24px rgba(100, 255, 218, 0.2)' }}>
-            <RocketOutlined style={{ fontSize: '2.5rem', color: '#64ffda' }} />
-          </Avatar>
-          <Title className="swipe-auth-title" level={1}>CRISP AI</Title>
-          <Text className="swipe-auth-subtitle">
-            Master Your Interview Skills with AI-Powered Practice
-          </Text>
+          <div className="brand-top">
+            <Avatar size={88} className="brand-avatar">
+              <RocketOutlined />
+            </Avatar>
+            <div className="brand-headline">
+              <Title className="swipe-auth-title" level={1}>CRISP AI</Title>
+              <Text className="swipe-auth-subtitle">
+                Master Your Interview Skills with AI-Powered Practice
+              </Text>
+            </div>
+          </div>
+
+          <div className="trust-row">
+            <div className="trust-badge"><CheckCircleOutlined /> <span>No credit card</span></div>
+            <div className="trust-badge"><SafetyOutlined /> <span>Privacy-first</span></div>
+            <div className="trust-badge"><RocketOutlined /> <span>Try instantly</span></div>
+          </div>
+
+          <div style={{ marginTop: 14 }}>
+            <Button className="btn-primary" style={{ marginRight: 12 }}>Get Started</Button>
+            <Button className="btn-ghost" onClick={() => message.info('Demo started (local)')}>Try Demo</Button>
+          </div>
         </div>
 
         <div className="auth-features">
           {features.map((feature, index) => (
-            <Card key={index} className="feature-card" bordered={false}>
+            <Card key={index} className="feature-card">
               <Card.Meta
                 avatar={feature.icon}
                 title={feature.title}
@@ -92,7 +107,7 @@ const AuthPage: React.FC = () => {
           ))}
         </div>
 
-        <Card className="auth-card">
+  <Card className="auth-card">
           <Tabs
             activeKey={activeTab}
             onChange={(key) => {
@@ -132,7 +147,7 @@ const AuthPage: React.FC = () => {
                       />
                     </Form.Item>
                     <Form.Item>
-                      <Button type="primary" htmlType="submit" loading={isLoading} block>
+                      <Button htmlType="submit" loading={isLoading} block className="btn-primary">
                         Sign In
                       </Button>
                     </Form.Item>
@@ -183,7 +198,7 @@ const AuthPage: React.FC = () => {
                       />
                     </Form.Item>
                     <Form.Item>
-                      <Button type="primary" htmlType="submit" loading={isLoading} block>
+                      <Button htmlType="submit" loading={isLoading} block className="btn-primary">
                         Create Account
                       </Button>
                     </Form.Item>

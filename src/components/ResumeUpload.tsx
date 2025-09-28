@@ -87,7 +87,7 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({
       <Card className="resume-upload-card">
         <div className="privacy-notice">
           <SafetyCertificateOutlined className="privacy-notice-icon" />
-          <Text className="text-secondary">
+          <Text style={{ color: '#000000' }}>
             Your resume data is processed locally and used only to generate relevant interview questions. We prioritize your privacy.
           </Text>
         </div>
@@ -177,24 +177,25 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({
     <Card className="resume-upload-card">
       <div className="privacy-notice">
         <SafetyCertificateOutlined className="privacy-notice-icon" />
-        <Text className="text-secondary">
+        <Text style={{ color: '#000000' }}>
           Your resume data is processed locally and used only to generate relevant interview questions. We prioritize your privacy.
         </Text>
       </div>
 
       <Space direction="vertical" style={{ width: '100%' }} size="large">
         <div style={{ textAlign: 'center' }}>
-          <CloudUploadOutlined className="text-secondary" style={{ fontSize: '4rem', marginBottom: '1rem' }} />
-          <Title level={2} className="text-primary" style={{ 
+          <CloudUploadOutlined style={{ color: '#1a73e8', fontSize: '4rem', marginBottom: '1rem' }} />
+          <Title level={2} style={{ 
+            color: '#000000',
             marginBottom: '0.5rem', 
             fontSize: '2rem',
             fontWeight: 600
           }}>
             Upload Your Resume
           </Title>
-          <Text className="text-secondary" style={{ 
+          <Text style={{ 
             fontSize: '1.1rem', 
-            color: '#4a5568', 
+            color: '#000000', 
             maxWidth: '700px', 
             margin: '0 auto', 
             lineHeight: '1.7',
@@ -268,16 +269,7 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({
           }}>
             Support for PDF and DOCX files. Maximum file size: 10MB
           </p>
-          <Button type="primary" icon={<CloudUploadOutlined />} size="large" style={{
-            marginTop: '18px',
-            fontWeight: 700,
-            fontSize: '1.1rem',
-            background: 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)',
-            border: 'none',
-            borderRadius: '12px',
-            boxShadow: '0 2px 8px #667eea33',
-            padding: '0 32px'
-          }}>
+          <Button type="primary" icon={<CloudUploadOutlined />} size="large" className="btn-primary" style={{ marginTop: '18px' }}>
             Upload Resume
           </Button>
         </Dragger>
@@ -285,10 +277,10 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({
         <Divider style={{ borderColor: 'var(--glass-border)', margin: 'var(--spacing-lg) 0' }} />
 
         <div style={{ textAlign: 'center' }}>
-          <Text type="secondary" style={{ 
+          <Text style={{ 
             fontSize: 'var(--font-size-base)', 
-            color: 'var(--text-secondary)',
-            fontWeight: 'var(--font-weight-medium)',
+            color: '#000000',
+            fontWeight: '600',
             lineHeight: 'var(--line-height-relaxed)'
           }}>
             🔒 Your resume data is processed locally and used only to generate relevant interview questions.

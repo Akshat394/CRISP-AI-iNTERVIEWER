@@ -264,7 +264,7 @@ const IntervieweePage: React.FC = () => {
                     Progress: {currentSession.currentQuestionIndex} of {currentSession.questions.length} questions
                   </Text>
                   <Space>
-                    <Button type="primary" onClick={handleResumeInterview}>
+                    <Button type="primary" onClick={handleResumeInterview} className="btn-primary">
                       Resume Interview
                     </Button>
                     <Button onClick={handleStartNewInterview}>
@@ -294,13 +294,14 @@ const IntervieweePage: React.FC = () => {
                 <Card className="glass-card" style={{ 
                     textAlign: 'center', 
                     padding: '2rem',
-                    background: 'var(--card-bg)',
-                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                    border: '1px solid var(--border-color)'
+                    background: '#1a1f3c',
+                    color: '#ffffff',
+                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.25)',
+                    border: '1px solid rgba(255,255,255,0.06)'
                   }}>
                   <Space direction="vertical" style={{ width: '100%' }} size="large">
                     <Title level={2} style={{ 
-                      color: 'var(--text-dark)', 
+                      color: '#ffffff', 
                       marginBottom: 'var(--spacing-md)',
                       fontSize: '2.25rem',
                       fontWeight: '700'
@@ -309,7 +310,7 @@ const IntervieweePage: React.FC = () => {
                     </Title>
                     <Text style={{ 
                       fontSize: '1.125rem', 
-                      color: 'var(--text-dark)', 
+                      color: '#ffffff', 
                       maxWidth: '600px', 
                       margin: '0 auto',
                       fontWeight: '500',
@@ -324,16 +325,8 @@ const IntervieweePage: React.FC = () => {
                       icon={<PlayCircleOutlined />}
                       onClick={handleStartInterview}
                       loading={isLoading}
-                      style={{ 
-                        height: '64px',
-                        fontSize: '20px',
-                        fontWeight: '700',
-                        padding: '0 var(--spacing-xl)',
-                        borderRadius: '16px',
-                        background: 'var(--success-gradient)',
-                        border: 'none',
-                        boxShadow: '0 8px 25px rgba(79, 172, 254, 0.4)'
-                      }}
+                      className="start-interview-btn"
+                      style={{ minWidth: 220 }}
                     >
                       {isLoading ? 'Preparing Interview...' : 'Start Interview'}
                     </Button>
@@ -410,7 +403,7 @@ const IntervieweePage: React.FC = () => {
 
                 <div style={{ textAlign: 'center' }}>
                   <Space>
-                    <Button type="primary" onClick={handleShowAnswersModal}>
+                    <Button type="primary" onClick={handleShowAnswersModal} className="btn-primary">
                       View Full Answer Details
                     </Button>
                     <Button onClick={handleStartNewInterview}>

@@ -3,9 +3,10 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: dark;
-  color: #ccd6f6;
-  background-color: #0a192f;
+  /* Prefer a light, high-contrast default for the whole app */
+  color-scheme: light;
+  color: #000000;
+  background-color: #ffffff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -42,27 +43,30 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #ffffff;
+  color: #000000;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: border-color 0.18s, box-shadow 0.18s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: #1a73e8;
+  box-shadow: 0 6px 18px rgba(26,115,232,0.06);
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
+/* Keep media query minimal; app defaults to light mode tokens above. */
+@media (prefers-color-scheme: dark) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
+    /* If the user prefers dark mode, provide a reasonable fallback that keeps contrast */
+    color: #e6eef8;
+    background-color: #0a192f;
   }
   button {
-    background-color: #f9f9f9;
+    background-color: #0f1724;
+    color: #e6eef8;
+    border-color: rgba(255,255,255,0.06);
   }
 }

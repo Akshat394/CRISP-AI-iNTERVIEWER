@@ -201,6 +201,43 @@
   font-weight: 600 !important;
 }
 
+/* Start Interview Button styles */
+.start-interview-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  padding: 0 28px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 14px;
+  background: #ffffff;
+  color: #1a73e8 !important;
+  border: 1px solid #1a73e8;
+  box-shadow: 0 6px 18px rgba(26, 115, 232, 0.08);
+  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+}
+
+.start-interview-btn .anticon {
+  color: #1a73e8; /* ensure icon is blue */
+}
+
+.start-interview-btn:hover {
+  transform: translateY(-2px);
+  background: #eaf4ff; /* very light blue */
+  box-shadow: 0 12px 30px rgba(26, 115, 232, 0.12);
+}
+
+.start-interview-btn:active {
+  transform: translateY(0);
+  background: #d7ebff;
+  box-shadow: 0 6px 14px rgba(26, 115, 232, 0.08);
+}
+
+.start-interview-btn.ant-btn-loading {
+  opacity: 0.98;
+}
+
 .modal-title {
   color: #000000 !important;
 }
