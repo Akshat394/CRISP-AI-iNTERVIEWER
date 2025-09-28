@@ -6,14 +6,15 @@ class AIService {
   private isApiKeyValid: boolean = false;
 
   constructor() {
-    this.apiKey = import.meta.env.GEMINI_API_KEY || '';
+    // Check for both environment variable formats for backward compatibility
+    this.apiKey = import.meta.env.GEMINI_API_KEY || import.meta.env.VITE_GEMINI_API_KEY || '';
     this.baseUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
     this.validateApiKey();
   }
 
   private validateApiKey(): void {
     if (!this.apiKey) {
-      console.error('❌ Gemini API key not found! Please set GEMINI_API_KEY in your environment variables.');
+      console.error('❌ Gemini API key not found! Please set GEMINI_API_KEY or VITE_GEMINI_API_KEY in your environment variables.');
       this.isApiKeyValid = false;
       return;
     }

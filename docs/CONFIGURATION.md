@@ -5,7 +5,7 @@
 1. Create a `.env` file in the root directory of your project
 2. Add your Gemini API key to the `.env` file:
 ```
-VITE_GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
 3. If you don't have a Gemini API key:
