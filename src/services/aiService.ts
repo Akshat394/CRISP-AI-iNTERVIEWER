@@ -13,7 +13,7 @@ class AIService {
 
   private validateApiKey(): void {
     if (!this.apiKey) {
-      console.error('❌ Gemini API key not found! Please set VITE_GEMINI_API_KEY in your environment variables.');
+      console.error('❌ Gemini API key not found! Please set GEMINI_API_KEY in your environment variables.');
       this.isApiKeyValid = false;
       return;
     }
@@ -34,7 +34,7 @@ class AIService {
 
   private ensureApiKey(): void {
     if (!this.isApiKeyValid) {
-      throw new Error('Gemini API key is not configured or invalid. Please check your environment variables and ensure VITE_GEMINI_API_KEY is set correctly.');
+      throw new Error('Gemini API key is not configured or invalid. Please check your environment variables and ensure GEMINI_API_KEY is set correctly.');
     }
   }
   private async callGeminiAPI(prompt: string, temperature: number = 0.7): Promise<string> {

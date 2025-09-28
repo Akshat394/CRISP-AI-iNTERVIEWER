@@ -66,7 +66,7 @@ vercel
 
 | Name | Value | Environment |
 |------|-------|-------------|
-| `VITE_GEMINI_API_KEY` | `AIzaSyCuWz8Oc5dnEFncJySzvOehTiNsNQHLxuw` | Production, Preview, Development |
+| `GEMINI_API_KEY` | `AIzaSyCuWz8Oc5dnEFncJySzvOehTiNsNQHLxuw` | Production, Preview, Development |
 
 ### 3.2 Or via CLI:
 ```bash
@@ -128,7 +128,7 @@ After deployment, you'll get:
 
 | Variable | Description | Required |
 |----------|-------------|----------|
-| `VITE_GEMINI_API_KEY` | Your Gemini API key | Yes |
+| `GEMINI_API_KEY` | Your Gemini API key | Yes |
 | `VITE_FIREBASE_API_KEY` | Firebase API key (if using auth) | Optional |
 | `VITE_FIREBASE_AUTH_DOMAIN` | Firebase auth domain | Optional |
 
