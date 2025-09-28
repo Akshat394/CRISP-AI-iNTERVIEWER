@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button, Input, Progress, Typography, Card, Space, Tag, Alert } from 'antd';
 import { SendOutlined, ClockCircleOutlined, UserOutlined, RobotOutlined } from '@ant-design/icons';
 import { Question, Answer, TimerState } from '../types';
+import './common.css';
 
 const { TextArea } = Input;
 const { Title, Text } = Typography;
@@ -136,16 +137,15 @@ const InterviewChat: React.FC<InterviewChatProps> = ({
   }
 
   return (
-    <div className="chat-container">
+    <div className="chat-container custom-card">
       {/* Enhanced Header */}
       <div className="chat-header">
         <Space direction="vertical" style={{ width: '100%' }} size="large">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Title level={2} style={{ 
-              margin: 0, 
-              color: 'var(--text-primary)',
-              fontSize: 'var(--font-size-2xl)',
-              fontWeight: 'var(--font-weight-bold)'
+            <Title level={2} className="text-primary" style={{ 
+              margin: 0,
+              fontSize: '1.5rem',
+              fontWeight: 600
             }}>
               Question {currentQuestionIndex + 1} of {questions.length}
             </Title>

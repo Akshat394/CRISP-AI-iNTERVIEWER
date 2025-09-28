@@ -1,8 +1,10 @@
 import React, { useState, useCallback } from 'react';
 import { Upload, Button, Typography, Card, Space, Tag, App, Progress, Divider } from 'antd';
-import { InboxOutlined, FileTextOutlined, DeleteOutlined, CloudUploadOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { InboxOutlined, FileTextOutlined, DeleteOutlined, CloudUploadOutlined, CheckCircleOutlined, SafetyCertificateOutlined } from '@ant-design/icons';
 import { ResumeData } from '../types';
 import { resumeParser } from '../services/resumeParser';
+import './common.css';
+import './ResumeUpload.css';
 
 const { Dragger } = Upload;
 const { Title, Text } = Typography;
@@ -82,12 +84,19 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({
 
   if (resumeData) {
     return (
-      <Card className="glass-card">
+      <Card className="resume-upload-card">
+        <div className="privacy-notice">
+          <SafetyCertificateOutlined className="privacy-notice-icon" />
+          <Text className="text-secondary">
+            Your resume data is processed locally and used only to generate relevant interview questions. We prioritize your privacy.
+          </Text>
+        </div>
+
         <Space direction="vertical" style={{ width: '100%' }} size="middle">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Space align="center">
-              <CheckCircleOutlined style={{ fontSize: '1.5rem', color: '#52c41a' }} />
-              <Title level={4} style={{ margin: 0, color: 'var(--text-primary)' }}>
+              <CheckCircleOutlined className="status-success" style={{ fontSize: '1.5rem' }} />
+              <Title level={4} className="text-primary" style={{ margin: 0 }}>
                 Resume Uploaded Successfully
               </Title>
             </Space>
@@ -165,30 +174,26 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({
   }
 
   return (
-    <Card className="glass-card" style={{
-      padding: 'var(--spacing-xxl)',
-      border: '3px solid #667eea',
-      boxShadow: '0 8px 32px rgba(102,126,234,0.15)',
-      borderRadius: '32px',
-      background: 'linear-gradient(135deg, #e0e7ff 0%, #fff 100%)',
-      position: 'relative',
-      zIndex: 2
-    }}>
+    <Card className="resume-upload-card">
+      <div className="privacy-notice">
+        <SafetyCertificateOutlined className="privacy-notice-icon" />
+        <Text className="text-secondary">
+          Your resume data is processed locally and used only to generate relevant interview questions. We prioritize your privacy.
+        </Text>
+      </div>
+
       <Space direction="vertical" style={{ width: '100%' }} size="large">
         <div style={{ textAlign: 'center' }}>
-          <CloudUploadOutlined style={{ fontSize: '5rem', color: '#667eea', marginBottom: 'var(--spacing-lg)', filter: 'drop-shadow(0 2px 8px #667eea33)' }} />
-          <Title level={2} style={{ 
-            color: '#2d3748', 
-            marginBottom: 'var(--spacing-md)', 
-            fontSize: '2.5rem',
-            fontWeight: 800,
-            letterSpacing: '0.5px',
-            textShadow: '0 2px 8px #667eea22'
+          <CloudUploadOutlined className="text-secondary" style={{ fontSize: '4rem', marginBottom: '1rem' }} />
+          <Title level={2} className="text-primary" style={{ 
+            marginBottom: '0.5rem', 
+            fontSize: '2rem',
+            fontWeight: 600
           }}>
-            📄 Upload Your Resume
+            Upload Your Resume
           </Title>
-          <Text style={{ 
-            fontSize: '1.25rem', 
+          <Text className="text-secondary" style={{ 
+            fontSize: '1.1rem', 
             color: '#4a5568', 
             maxWidth: '700px', 
             margin: '0 auto', 

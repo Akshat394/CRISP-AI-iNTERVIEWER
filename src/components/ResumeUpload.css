@@ -1,0 +1,79 @@
+.resume-upload-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.resume-upload-dragger {
+  background: var(--bg-secondary) !important;
+  border: 2px dashed var(--border-color) !important;
+  border-radius: 12px !important;
+  padding: 32px !important;
+  transition: all 0.3s ease !important;
+}
+
+.resume-upload-dragger:hover {
+  border-color: var(--border-color-hover) !important;
+  background: var(--bg-card-hover) !important;
+}
+
+.resume-data-container {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 16px;
+}
+
+.resume-info-row {
+  display: flex;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.resume-info-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+  min-width: 100px;
+}
+
+.resume-info-value {
+  color: var(--text-primary);
+}
+
+.privacy-notice {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  background: var(--bg-secondary);
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border-color);
+}
+
+.privacy-notice-icon {
+  color: var(--text-muted);
+  margin-right: 8px;
+}
+
+/* Status Messages */
+.status-success {
+  color: #52c41a;
+}
+
+.status-error {
+  color: #f5222d;
+}
+
+.status-warning {
+  color: #faad14;
+}
+
+/* Progress Bar */
+.upload-progress {
+  margin-top: 16px;
+}
+
+.upload-progress .ant-progress-text {
+  color: var(--text-primary) !important;
+}
