@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button, Input, Progress, Typography, Card, Space, Tag, Alert } from 'antd';
 import { SendOutlined, ClockCircleOutlined, UserOutlined, RobotOutlined } from '@ant-design/icons';
 import { Question, Answer, TimerState } from '../types';
-import './common.css';
+import './InterviewChat.css';
 
 const { TextArea } = Input;
 const { Title, Text } = Typography;

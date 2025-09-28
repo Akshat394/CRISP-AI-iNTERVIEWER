@@ -1,20 +1,20 @@
 /* Common styles for components */
 :root {
   /* Color Variables */
-  --primary-color: #1a1f3c;
+  --primary-color: #4a5568;
   --secondary-color: #667eea;
-  --accent-color: #6366f1;
+  --accent-color: #4c51bf;
   
   /* Background Colors */
-  --bg-primary: #1a1f3c;
-  --bg-secondary: #232a4d;
-  --bg-card: rgba(255, 255, 255, 0.03);
-  --bg-card-hover: rgba(255, 255, 255, 0.05);
+  --bg-primary: #ffffff;
+  --bg-secondary: #f7fafc;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f7fafc;
   
   /* Text Colors */
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.85);
-  --text-muted: rgba(255, 255, 255, 0.65);
+  --text-primary: #2d3748;
+  --text-secondary: #4a5568;
+  --text-muted: #718096;
   
   /* Border Colors */
   --border-color: rgba(255, 255, 255, 0.1);
