@@ -3,6 +3,7 @@ import { Modal } from 'antd';
 import { Layout, Typography, Button, Space, Card, Alert, App, Avatar } from 'antd';
 import { UserOutlined, LogoutOutlined, PlayCircleOutlined, RocketOutlined, TrophyOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import './IntervieweePage.css';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { signOut } from '../store/authSlice';
 import { 
@@ -15,6 +16,7 @@ import {
 } from '../store/interviewSlice';
 import { addInterviewSession, addCandidateProfile } from '../store/candidatesSlice';
 import { ResumeData } from '../types';
+import { checkGeminiApiKey } from '../utils/aiConfig';
 
 import ResumeUpload from '../components/ResumeUpload';
 import InterviewChat from '../components/InterviewChat';
@@ -64,6 +66,10 @@ const IntervieweePage: React.FC = () => {
     if (!resumeData || !user) return;
 
     try {
+      if (!checkGeminiApiKey()) {
+        return;
+      }
+
       // Create candidate profile if not exists
       const candidateProfile = {
         id: user.id,
@@ -84,7 +90,11 @@ const IntervieweePage: React.FC = () => {
       
       message.success('Interview started! Good luck!');
     } catch (error: any) {
-      message.error(error.message || 'Failed to start interview');
+      if (error.message?.includes('Gemini API key')) {
+        message.error('AI services are currently unavailable. Please check your configuration.');
+      } else {
+        message.error(error.message || 'Failed to start interview');
+      }
     }
   };
 
@@ -102,14 +112,26 @@ const IntervieweePage: React.FC = () => {
       })).unwrap();
 
       // Evaluate the answer
-      dispatch(evaluateAnswer({ question, answer: answerObj }));
+      try {
+        await dispatch(evaluateAnswer({ question, answer: answerObj }));
+      } catch (evalError: any) {
+        if (evalError.message?.includes('Gemini API key')) {
+          message.warning('Answer submitted but AI evaluation is currently unavailable.');
+        } else {
+          throw evalError;
+        }
+      }
 
       // Check if interview is complete
       if (currentSession.currentQuestionIndex + 1 >= currentSession.questions.length) {
         await handleCompleteInterview();
       }
     } catch (error: any) {
-      message.error(error.message || 'Failed to submit answer');
+      if (error.message?.includes('Gemini API key')) {
+        message.error('AI services are currently unavailable. Please check your configuration.');
+      } else {
+        message.error(error.message || 'Failed to submit answer');
+      }
     }
   };
 
@@ -117,6 +139,21 @@ const IntervieweePage: React.FC = () => {
     if (!currentSession) return;
 
     try {
+      if (!checkGeminiApiKey()) {
+        // Still complete the interview but without AI evaluation
+        dispatch(addInterviewSession({
+          candidateId: currentSession.candidateId,
+          session: { 
+            ...currentSession,
+            summary: "AI evaluation unavailable - Please check the configuration guide in the documentation.",
+            strengths: [],
+            weaknesses: [],
+            totalScore: 0,
+          },
+        }));
+        return;
+      }
+
       const evaluation = await dispatch(completeInterview(currentSession)).unwrap();
       
       // Add session to candidate profile
@@ -127,7 +164,21 @@ const IntervieweePage: React.FC = () => {
 
       message.success('Interview completed! Check your results.');
     } catch (error: any) {
-      message.error(error.message || 'Failed to complete interview');
+      if (error.message?.includes('Gemini API key')) {
+        // Complete interview without AI evaluation
+        dispatch(addInterviewSession({
+          candidateId: currentSession.candidateId,
+          session: { 
+            ...currentSession,
+            summary: "AI evaluation unavailable - Please check configuration.",
+            strengths: [],
+            weaknesses: [],
+          },
+        }));
+        message.warning('Interview completed without AI evaluation. Some features are unavailable.');
+      } else {
+        message.error(error.message || 'Failed to complete interview');
+      }
     }
   };
 
@@ -143,67 +194,40 @@ const IntervieweePage: React.FC = () => {
     setShowWelcomeBack(false);
   };
 
-  const getScoreBadgeClass = (score?: number) => {
-    if (!score) return 'score-badge';
-    if (score >= 80) return 'score-badge score-excellent';
-    if (score >= 60) return 'score-badge score-good';
-    if (score >= 40) return 'score-badge score-average';
-    return 'score-badge score-poor';
-  };
-
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Header style={{ 
-        background: 'var(--glass-bg)',
-        backdropFilter: 'blur(20px)',
-        borderBottom: '1px solid var(--glass-border)',
-        padding: '0 32px', 
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        position: 'sticky',
-        top: 0,
-        zIndex: 1000,
-        boxShadow: 'var(--shadow-soft)'
-      }}>
-        <Space align="center">
-          <RocketOutlined style={{ fontSize: '2rem', color: '#667eea' }} />
-          <Title className="page-title" level={3} style={{ margin: 0 }}>
+    <Layout className="interview-page">
+      <Header className="interview-header">
+        <div className="header-left">
+          <RocketOutlined style={{ fontSize: '2rem', color: '#000000' }} />
+          <Title className="brand-logo" level={3}>
             Crisp AI
           </Title>
-        </Space>
+        </div>
         
-        <Space align="center" size="large">
-          <Space align="center">
+        <div className="header-right">
+          <div className="user-info">
             <Avatar 
               size="small" 
               icon={<UserOutlined />} 
-              style={{ background: 'var(--success-gradient)' }}
+              style={{ background: '#1890ff' }}
             />
-            <Text style={{ color: 'var(--text-primary)', fontWeight: '500' }}>
-              Welcome, {user?.name || user?.email}
+            <Text style={{ color: '#000000', fontWeight: '500' }}>
+              {user?.name || user?.email}
             </Text>
-          </Space>
+          </div>
           <Button 
-            type="text"
+            type="default"
             icon={<LogoutOutlined />} 
             onClick={handleSignOut}
-            style={{ 
-              color: 'var(--text-primary)',
-              border: '1px solid var(--glass-border)',
-              background: 'rgba(255, 255, 255, 0.1)',
-              backdropFilter: 'blur(10px)',
-              borderRadius: '12px'
-            }}
+            className="action-button"
           >
             Sign Out
           </Button>
-        </Space>
+        </div>
       </Header>
 
       <Content className="main-content">
         <Space direction="vertical" style={{ width: '100%' }} size="large">
-          {/* Enhanced Page Header */}
           <div className="page-header">
             <Space direction="vertical" size="large" style={{ width: '100%' }}>
               <Space align="center" style={{ justifyContent: 'center', width: '100%' }}>
@@ -256,57 +280,59 @@ const IntervieweePage: React.FC = () => {
 
           {/* Resume Upload */}
           {!isInterviewActive && (
-            <ResumeUpload
-              onResumeParsed={handleResumeParsed}
-              onClearResume={handleClearResume}
-              resumeData={resumeData}
-            />
-          )}
+            <div className="resume-section">
+              <ResumeUpload
+                onResumeParsed={handleResumeParsed}
+                onClearResume={handleClearResume}
+                resumeData={resumeData}
+              />
 
-          {/* Enhanced Start Interview Button */}
-          {resumeData && !isInterviewActive && !showWelcomeBack && (
-            <Card className="glass-card" style={{ textAlign: 'center', padding: 'var(--spacing-xxl)' }}>
-              <Space direction="vertical" style={{ width: '100%' }} size="large">
-                <Title level={2} style={{ 
-                  color: 'var(--text-primary)', 
-                  marginBottom: 'var(--spacing-md)',
-                  fontSize: 'var(--font-size-2xl)',
-                  fontWeight: 'var(--font-weight-bold)'
-                }}>
-                  🚀 Ready to Start Your Interview?
-                </Title>
-                <Text style={{ 
-                  fontSize: 'var(--font-size-lg)', 
-                  color: 'var(--text-secondary)', 
-                  maxWidth: '600px', 
-                  margin: '0 auto',
-                  fontWeight: 'var(--font-weight-medium)',
-                  lineHeight: 'var(--line-height-relaxed)'
-                }}>
-                  Your resume has been processed and personalized questions have been generated. 
-                  Click below to begin your AI-powered interview experience.
-                </Text>
-                <Button
-                  type="primary"
-                  size="large"
-                  icon={<PlayCircleOutlined />}
-                  onClick={handleStartInterview}
-                  loading={isLoading}
-                  style={{ 
-                    height: '64px',
-                    fontSize: '20px',
-                    fontWeight: '700',
-                    padding: '0 var(--spacing-xl)',
-                    borderRadius: '16px',
-                    background: 'var(--success-gradient)',
-                    border: 'none',
-                    boxShadow: '0 8px 25px rgba(79, 172, 254, 0.4)'
-                  }}
-                >
-                  {isLoading ? 'Preparing Interview...' : 'Start Interview'}
-                </Button>
-              </Space>
-            </Card>
+              {/* Enhanced Start Interview Button */}
+              {resumeData && !showWelcomeBack && (
+                <Card className="glass-card" style={{ textAlign: 'center', padding: 'var(--spacing-xxl)' }}>
+                  <Space direction="vertical" style={{ width: '100%' }} size="large">
+                    <Title level={2} style={{ 
+                      color: 'var(--text-primary)', 
+                      marginBottom: 'var(--spacing-md)',
+                      fontSize: 'var(--font-size-2xl)',
+                      fontWeight: 'var(--font-weight-bold)'
+                    }}>
+                      🚀 Ready to Start Your Interview?
+                    </Title>
+                    <Text style={{ 
+                      fontSize: 'var(--font-size-lg)', 
+                      color: 'var(--text-secondary)', 
+                      maxWidth: '600px', 
+                      margin: '0 auto',
+                      fontWeight: 'var(--font-weight-medium)',
+                      lineHeight: 'var(--line-height-relaxed)'
+                    }}>
+                      Your resume has been processed and personalized questions have been generated. 
+                      Click below to begin your AI-powered interview experience.
+                    </Text>
+                    <Button
+                      type="primary"
+                      size="large"
+                      icon={<PlayCircleOutlined />}
+                      onClick={handleStartInterview}
+                      loading={isLoading}
+                      style={{ 
+                        height: '64px',
+                        fontSize: '20px',
+                        fontWeight: '700',
+                        padding: '0 var(--spacing-xl)',
+                        borderRadius: '16px',
+                        background: 'var(--success-gradient)',
+                        border: 'none',
+                        boxShadow: '0 8px 25px rgba(79, 172, 254, 0.4)'
+                      }}
+                    >
+                      {isLoading ? 'Preparing Interview...' : 'Start Interview'}
+                    </Button>
+                  </Space>
+                </Card>
+              )}
+            </div>
           )}
 
           {/* Interview Chat */}
@@ -324,34 +350,34 @@ const IntervieweePage: React.FC = () => {
           {currentSession?.isCompleted && (
             <Card>
               <Space direction="vertical" style={{ width: '100%' }} size="large">
-                <Title level={3} style={{ textAlign: 'center', color: '#52c41a' }}>
+                <Title level={3} className="stats-title" style={{ textAlign: 'center', color: '#000000' }}>
                   Interview Completed!
                 </Title>
                 
-                <div style={{ textAlign: 'center' }}>
-                  <Title level={1} className={getScoreBadgeClass(currentSession.totalScore)}>
+                <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+                  <Title level={1} className="stats-value">
                     {currentSession.totalScore}/100
                   </Title>
-                  <Text type="secondary">Overall Score</Text>
+                  <Text style={{ color: '#333333' }}>Overall Score</Text>
                 </div>
 
                 {currentSession.summary && (
-                  <Card size="small">
-                    <Title level={4}>Summary</Title>
-                    <Text>{currentSession.summary}</Text>
+                  <Card className="stats-card">
+                    <Title level={4} className="stats-title">Summary</Title>
+                    <Text style={{ color: '#333333' }}>{currentSession.summary}</Text>
                   </Card>
                 )}
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                   {currentSession.strengths && currentSession.strengths.length > 0 && (
-                    <Card size="small" style={{ background: '#f6ffed', border: '1px solid #b7eb8f' }}>
-                      <Title level={5} style={{ color: '#52c41a', margin: 0 }}>
+                    <Card className="stats-card" style={{ borderTop: '3px solid #52c41a' }}>
+                      <Title level={5} className="stats-title" style={{ color: '#000000' }}>
                         Strengths
                       </Title>
                       <ul style={{ margin: '8px 0 0 0', paddingLeft: 20 }}>
-                        {currentSession.strengths.map((strength, index) => (
+                        {currentSession.strengths.map((strength: string, index: number) => (
                           <li key={index}>
-                            <Text>{strength}</Text>
+                            <Text style={{ color: '#333333' }}>{strength}</Text>
                           </li>
                         ))}
                       </ul>
@@ -359,14 +385,14 @@ const IntervieweePage: React.FC = () => {
                   )}
 
                   {currentSession.weaknesses && currentSession.weaknesses.length > 0 && (
-                    <Card size="small" style={{ background: '#fff2f0', border: '1px solid #ffccc7' }}>
-                      <Title level={5} style={{ color: '#ff4d4f', margin: 0 }}>
+                    <Card className="stats-card" style={{ borderTop: '3px solid #ff4d4f' }}>
+                      <Title level={5} className="stats-title" style={{ color: '#000000' }}>
                         Areas for Improvement
                       </Title>
                       <ul style={{ margin: '8px 0 0 0', paddingLeft: 20 }}>
-                        {currentSession.weaknesses.map((weakness, index) => (
+                        {currentSession.weaknesses.map((weakness: string, index: number) => (
                           <li key={index}>
-                            <Text>{weakness}</Text>
+                            <Text style={{ color: '#333333' }}>{weakness}</Text>
                           </li>
                         ))}
                       </ul>
@@ -387,27 +413,38 @@ const IntervieweePage: React.FC = () => {
 
                 {/* Modal for full answer details */}
                 <Modal
-                  title="Interview Answer Details & Improvements"
+                  title={<span className="modal-title">Interview Answer Details & Improvements</span>}
                   open={showAnswersModal}
                   onCancel={handleCloseAnswersModal}
                   footer={null}
-                  width={700}
+                  width={800}
+                  className="answer-modal"
                 >
                   <Space direction="vertical" style={{ width: '100%' }} size="large">
-                    {currentSession.questions.map((q, idx) => {
+                    {currentSession.questions.map((q: any, idx: number) => {
                       const ans = currentSession.answers[idx];
                       return (
-                        <Card key={q.id} size="small" style={{ marginBottom: 12 }}>
-                          <Title level={5} style={{ marginBottom: 4 }}>Q{idx + 1}: {q.text}</Title>
-                          <Text type="secondary" style={{ fontSize: 13 }}>
+                        <Card key={q.id} className="stats-card" style={{ marginBottom: 16 }}>
+                          <Title level={5} className="stats-title" style={{ marginBottom: 8 }}>
+                            Q{idx + 1}: {q.text}
+                          </Title>
+                          <Text style={{ color: '#666666', fontSize: 13 }}>
                             Difficulty: {q.difficulty} | Category: {q.category}
                           </Text>
-                          <div style={{ marginTop: 8 }}>
-                            <Text strong>Your Answer:</Text>
-                            <div style={{ background: '#fafafa', borderRadius: 8, padding: 10, margin: '6px 0' }}>
-                              {ans?.text || <Text type="danger">No answer provided.</Text>}
+                          <div style={{ marginTop: 12 }}>
+                            <Text strong style={{ color: '#000000' }}>Your Answer:</Text>
+                            <div style={{ 
+                              background: '#f8f9fa', 
+                              borderRadius: 8, 
+                              padding: 16, 
+                              margin: '8px 0',
+                              color: '#333333'
+                            }}>
+                              {ans?.text || <Text style={{ color: '#ff4d4f' }}>No answer provided.</Text>}
                             </div>
-                            <Text>Score: <b>{ans?.score ?? 'N/A'}/10</b></Text>
+                            <Text style={{ color: '#000000' }}>
+                              Score: <span style={{ fontWeight: 600 }}>{ans?.score ?? 'N/A'}/10</span>
+                            </Text>
                           </div>
                           {ans?.feedback && (
                             <div style={{ marginTop: 8 }}>

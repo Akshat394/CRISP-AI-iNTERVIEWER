@@ -1,0 +1,151 @@
+/* IntervieweePage Styles */
+.interview-page {
+  min-height: 100vh;
+  background: var(--primary-bg);
+}
+
+.interview-header {
+  background: #ffffff;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand-logo {
+  color: #000000;
+  font-weight: 700;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #000000;
+}
+
+.main-content {
+  padding: 6rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: calc(100vh - 64px);
+}
+
+.welcome-section {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.welcome-title {
+  color: #000000 !important;
+  font-size: 2.5rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.welcome-subtitle {
+  color: #333333 !important;
+  font-size: 1.2rem !important;
+}
+
+.resume-section {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.resume-title {
+  color: #000000 !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.resume-info {
+  color: #333333 !important;
+  margin-bottom: 1rem !important;
+}
+
+.action-button {
+  height: 48px !important;
+  font-size: 1.1rem !important;
+  padding: 0 2rem !important;
+}
+
+.interview-chat-container {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  min-height: 500px;
+}
+
+.stats-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stats-title {
+  color: #000000 !important;
+  font-size: 1.2rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.stats-value {
+  color: #333333 !important;
+  font-size: 2rem !important;
+  font-weight: 600 !important;
+}
+
+.modal-title {
+  color: #000000 !important;
+}
+
+.modal-text {
+  color: #333333 !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .interview-header {
+    padding: 1rem;
+  }
+
+  .main-content {
+    padding: 5rem 1rem 1rem;
+  }
+
+  .welcome-title {
+    font-size: 2rem !important;
+  }
+
+  .welcome-subtitle {
+    font-size: 1rem !important;
+  }
+
+  .action-button {
+    width: 100%;
+  }
+}
