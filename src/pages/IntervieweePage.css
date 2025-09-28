@@ -1,11 +1,25 @@
+/* Custom CSS Variables for consistent colors */
+:root {
+  --primary-bg: #1a1f3c;
+  --header-bg: #ffffff;
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.85);
+  --text-dark: #2d3748;
+  --text-light: #ffffff;
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --hover-bg: rgba(255, 255, 255, 0.05);
+}
+
 /* IntervieweePage Styles */
 .interview-page {
   min-height: 100vh;
   background: var(--primary-bg);
+  color: var(--text-primary);
 }
 
 .interview-header {
-  background: #ffffff;
+  background: var(--header-bg);
   padding: 1rem 2rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -20,6 +34,74 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.brand-logo {
+  color: var(--text-dark) !important;
+  margin: 0;
+  font-weight: 600;
+}
+
+.header-left .anticon {
+  color: var(--text-dark) !important;
+  font-size: 2rem;
+}
+
+.main-content {
+  padding: 6rem 2rem 2rem;
+  background: var(--primary-bg);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-dark);
+}
+
+.user-info .ant-typography {
+  color: var(--text-dark) !important;
+  font-weight: 500;
+}
+
+.welcome-section {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.welcome-title {
+  color: var(--text-primary) !important;
+  margin-bottom: 1rem;
+}
+
+.welcome-subtitle {
+  color: var(--text-secondary) !important;
+  font-size: 1.125rem;
+}
+
+.glass-card {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.stats-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+}
+
+.page-title {
+  color: var(--text-primary) !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.page-subtitle {
+  color: var(--text-secondary) !important;
 }
 
 .header-right {

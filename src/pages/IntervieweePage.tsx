@@ -18,6 +18,8 @@ import { addInterviewSession, addCandidateProfile } from '../store/candidatesSli
 import { ResumeData } from '../types';
 import { checkGeminiApiKey } from '../utils/aiConfig';
 
+
+
 import ResumeUpload from '../components/ResumeUpload';
 import InterviewChat from '../components/InterviewChat';
 
@@ -198,8 +200,8 @@ const IntervieweePage: React.FC = () => {
     <Layout className="interview-page">
       <Header className="interview-header">
         <div className="header-left">
-          <RocketOutlined style={{ fontSize: '2rem', color: '#000000' }} />
-          <Title className="brand-logo" level={3}>
+                      <RocketOutlined style={{ color: 'var(--text-dark)', fontSize: '2rem' }} />
+          <Title className="brand-logo" level={3} style={{ color: 'var(--text-dark)' }}>
             Crisp AI
           </Title>
         </div>
@@ -211,7 +213,7 @@ const IntervieweePage: React.FC = () => {
               icon={<UserOutlined />} 
               style={{ background: '#1890ff' }}
             />
-            <Text style={{ color: '#000000', fontWeight: '500' }}>
+            <Text style={{ color: 'var(--text-dark)', fontWeight: '500' }}>
               {user?.name || user?.email}
             </Text>
           </div>
@@ -231,8 +233,8 @@ const IntervieweePage: React.FC = () => {
           <div className="page-header">
             <Space direction="vertical" size="large" style={{ width: '100%' }}>
               <Space align="center" style={{ justifyContent: 'center', width: '100%' }}>
-                <TrophyOutlined style={{ fontSize: '3rem', color: '#667eea' }} />
-                <Title className="page-title" level={1} style={{ margin: 0 }}>
+                <TrophyOutlined style={{ fontSize: '3rem', color: 'var(--text-secondary)' }} />
+                <Title className="page-title" level={1} style={{ color: 'var(--text-primary)', margin: 0 }}>
                   Interviewee Dashboard
                 </Title>
               </Space>
@@ -289,23 +291,29 @@ const IntervieweePage: React.FC = () => {
 
               {/* Enhanced Start Interview Button */}
               {resumeData && !showWelcomeBack && (
-                <Card className="glass-card" style={{ textAlign: 'center', padding: 'var(--spacing-xxl)' }}>
+                <Card className="glass-card" style={{ 
+                    textAlign: 'center', 
+                    padding: '2rem',
+                    background: 'var(--card-bg)',
+                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid var(--border-color)'
+                  }}>
                   <Space direction="vertical" style={{ width: '100%' }} size="large">
                     <Title level={2} style={{ 
-                      color: 'var(--text-primary)', 
+                      color: 'var(--text-dark)', 
                       marginBottom: 'var(--spacing-md)',
-                      fontSize: 'var(--font-size-2xl)',
-                      fontWeight: 'var(--font-weight-bold)'
+                      fontSize: '2.25rem',
+                      fontWeight: '700'
                     }}>
                       🚀 Ready to Start Your Interview?
                     </Title>
                     <Text style={{ 
-                      fontSize: 'var(--font-size-lg)', 
-                      color: 'var(--text-secondary)', 
+                      fontSize: '1.125rem', 
+                      color: 'var(--text-dark)', 
                       maxWidth: '600px', 
                       margin: '0 auto',
-                      fontWeight: 'var(--font-weight-medium)',
-                      lineHeight: 'var(--line-height-relaxed)'
+                      fontWeight: '500',
+                      lineHeight: '1.6'
                     }}>
                       Your resume has been processed and personalized questions have been generated. 
                       Click below to begin your AI-powered interview experience.
@@ -350,21 +358,21 @@ const IntervieweePage: React.FC = () => {
           {currentSession?.isCompleted && (
             <Card>
               <Space direction="vertical" style={{ width: '100%' }} size="large">
-                <Title level={3} className="stats-title" style={{ textAlign: 'center', color: '#000000' }}>
+                <Title level={3} className="stats-title" style={{ textAlign: 'center', color: 'var(--text-dark)' }}>
                   Interview Completed!
                 </Title>
                 
                 <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-                  <Title level={1} className="stats-value">
+                  <Title level={1} className="stats-value" style={{ color: 'var(--text-dark)' }}>
                     {currentSession.totalScore}/100
                   </Title>
-                  <Text style={{ color: '#333333' }}>Overall Score</Text>
+                  <Text style={{ color: 'var(--text-dark)', opacity: 0.85 }}>Overall Score</Text>
                 </div>
 
                 {currentSession.summary && (
                   <Card className="stats-card">
-                    <Title level={4} className="stats-title">Summary</Title>
-                    <Text style={{ color: '#333333' }}>{currentSession.summary}</Text>
+                    <Title level={4} className="stats-title" style={{ color: 'var(--text-dark)' }}>Summary</Title>
+                    <Text style={{ color: 'var(--text-dark)', opacity: 0.85 }}>{currentSession.summary}</Text>
                   </Card>
                 )}
 
