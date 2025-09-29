@@ -6,6 +6,7 @@ import { ConfigProvider, App as AntApp } from 'antd';
 import { store, persistor } from './store';
 import { useAppDispatch, useAppSelector } from './hooks/redux';
 import { checkAuthState } from './store/authSlice';
+import { UserRole } from './types';
 
 // Configure PDF.js early
 import './config/pdfjs';
@@ -47,40 +48,39 @@ const AppContent: React.FC = () => {
         }}
       >
         <AntApp>
-          <div className="app">
-            <Routes>
-              <Route
-                path="/auth"
-                element={user ? <Navigate to="/interviewee" replace /> : <AuthPage />}
-              />
-              <Route
-                path="/interviewee"
-                element={
-                  <ProtectedRoute>
-                    <IntervieweePage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/interviewer"
-                element={
-                  <ProtectedRoute>
-                    <InterviewerPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/"
-                element={
-                  user ? (
-                    <Navigate to="/interviewee" replace />
+          <Routes>
+            <Route path="/auth" element={<AuthPage />} />
+            <Route
+              path="/interviewer"
+              element={
+                <ProtectedRoute requiredRole={UserRole.INTERVIEWER}>
+                  <InterviewerPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/interviewee"
+              element={
+                <ProtectedRoute requiredRole={UserRole.INTERVIEWEE}>
+                  <IntervieweePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/"
+              element={
+                user ? (
+                  user.role === UserRole.INTERVIEWER ? (
+                    <Navigate to="/interviewer" replace />
                   ) : (
-                    <Navigate to="/auth" replace />
+                    <Navigate to="/interviewee" replace />
                   )
-                }
-              />
-            </Routes>
-          </div>
+                ) : (
+                  <Navigate to="/auth" replace />
+                )
+              }
+            />
+          </Routes>
         </AntApp>
       </ConfigProvider>
     </Router>

@@ -5,21 +5,49 @@ import {
   onAuthStateChanged,
   User as FirebaseUser,
   updateProfile,
+  fetchSignInMethodsForEmail
 } from 'firebase/auth';
-import { auth } from './firebase';
-import { User } from '../types';
+import { auth, db } from './firebase'; // Import db
+import { doc, setDoc, getDoc } from 'firebase/firestore'; // Import Firestore functions
+import { User, UserRole } from '../types'; // Import UserRole
 
 class AuthService {
-  async signUp(email: string, password: string, name?: string): Promise<User> {
+  async signUp(email: string, password: string, name?: string, role: UserRole = UserRole.INTERVIEWEE): Promise<User> {
     try {
+      // Check if user with this email already exists
+      const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+      if (signInMethods.length > 0) {
+        // User already exists, check their stored role
+        const userDocRef = doc(db, 'users', email);
+        const userDoc = await getDoc(userDocRef);
+        if (userDoc.exists()) {
+          const existingUserData = userDoc.data();
+          if (existingUserData.role && existingUserData.role !== role) {
+            throw new Error(`Account already exists as ${existingUserData.role}. Please sign in with your existing role.`);
+          }
+        }
+      }
+
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const firebaseUser = userCredential.user;
 
-      if (name && firebaseUser) {
+      if (firebaseUser) {
         await updateProfile(firebaseUser, { displayName: name });
+        // Store user role in Firestore
+        await setDoc(doc(db, 'users', firebaseUser.uid), {
+          email: firebaseUser.email,
+          name: name || '',
+          role: role,
+        });
       }
 
-      return this.mapFirebaseUserToUser(firebaseUser);
+      // Return user with the specified role
+      return {
+        id: firebaseUser.uid,
+        email: firebaseUser.email || '',
+        name: firebaseUser.displayName || undefined,
+        role: role, // Use the role parameter directly
+      };
     } catch (error: any) {
       throw new Error(error.message || 'Failed to create account');
     }
@@ -44,24 +72,29 @@ class AuthService {
 
   async getCurrentUser(): Promise<User | null> {
     return new Promise((resolve) => {
-      const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => { // Make async
         unsubscribe();
-        resolve(firebaseUser ? this.mapFirebaseUserToUser(firebaseUser) : null);
+        resolve(firebaseUser ? await this.mapFirebaseUserToUser(firebaseUser) : null); // Await mapFirebaseUserToUser
       });
     });
   }
 
   onAuthStateChanged(callback: (user: User | null) => void): () => void {
-    return onAuthStateChanged(auth, (firebaseUser) => {
-      callback(firebaseUser ? this.mapFirebaseUserToUser(firebaseUser) : null);
+    return onAuthStateChanged(auth, async (firebaseUser) => { // Make async
+      callback(firebaseUser ? await this.mapFirebaseUserToUser(firebaseUser) : null); // Await mapFirebaseUserToUser
     });
   }
 
-  private mapFirebaseUserToUser(firebaseUser: FirebaseUser): User {
+  private async mapFirebaseUserToUser(firebaseUser: FirebaseUser): Promise<User> { // Make async and return Promise<User>
+    const userDocRef = doc(db, 'users', firebaseUser.uid);
+    const userDoc = await getDoc(userDocRef);
+    const userData = userDoc.exists() ? userDoc.data() : {};
+
     return {
       id: firebaseUser.uid,
       email: firebaseUser.email || '',
       name: firebaseUser.displayName || undefined,
+      role: userData.role || UserRole.INTERVIEWEE, // Default role to INTERVIEWEE if not found
     };
   }
 }

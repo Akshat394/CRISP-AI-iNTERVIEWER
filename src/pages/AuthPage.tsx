@@ -3,7 +3,9 @@ import { Card, Tabs, Form, Input, Button, Typography, App, Avatar } from 'antd';
 import { UserOutlined, LockOutlined, MailOutlined, RocketOutlined, CheckCircleOutlined, SafetyOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { signIn, signUp, clearError } from '../store/authSlice';
+import { UserRole } from '../types';
 import RoleSlider from '../components/RoleSlider';
+import { useNavigate } from 'react-router-dom';
 
 import './AuthPage.css';
 
@@ -14,8 +16,8 @@ const AuthPage: React.FC = () => {
   const { isLoading, error } = useAppSelector((state) => state.auth);
   const [activeTab, setActiveTab] = useState('signin');
   const { message } = App.useApp();
-  const [selectedRole, setSelectedRole] = useState<'interviewee' | 'interviewer'>('interviewee');
-
+  const [selectedRole, setSelectedRole] = useState<UserRole>(UserRole.INTERVIEWEE);
+  const navigate = useNavigate();
   const features = [
     {
       icon: <RocketOutlined className="feature-icon" />,
@@ -37,20 +39,37 @@ const AuthPage: React.FC = () => {
 
   const handleSignIn = async (values: { email: string; password: string }) => {
     try {
-      await dispatch(signIn(values)).unwrap();
-      message.success('Signed in successfully!');
-    } catch (error: any) {
-      if (error && typeof error.message === 'string' && error.message.includes('auth/invalid-credential')) {
-        message.error('Your email ID or password is incorrect.');
+      const resultAction = await dispatch(signIn(values));
+      if (signIn.fulfilled.match(resultAction)) {
+        const signedInUser = resultAction.payload;
+        message.success('Signed in successfully!');
+        if (signedInUser.role === UserRole.INTERVIEWER) {
+          navigate('/interviewer');
+        } else {
+          navigate('/interviewee');
+        }
       } else {
-        message.error(error.message || 'Sign in failed');
+        // Handle sign-in rejection (e.g., display error message)
+        const error = resultAction.payload || resultAction.error;
+        const errorMessage = (error && typeof error === 'object' && 'message' in error && typeof error.message === 'string')
+          ? error.message
+          : 'Sign in failed';
+
+        if (errorMessage.includes('auth/invalid-credential')) {
+          message.error('Your email ID or password is incorrect.');
+        } else {
+          message.error(errorMessage);
+        }
       }
+    } catch (error: any) {
+      message.error(error.message || 'Sign in failed');
     }
   };
 
   const handleSignUp = async (values: { email: string; password: string; name?: string }) => {
     try {
-      await dispatch(signUp(values)).unwrap();
+      // Pass the selected role to the signup function
+      await dispatch(signUp({ ...values, role: selectedRole })).unwrap();
       message.success('Account created successfully!');
       setActiveTab('signin');
     } catch (error: any) {

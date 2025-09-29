@@ -1,8 +1,14 @@
+export enum UserRole {
+  INTERVIEWER = 'interviewer',
+  INTERVIEWEE = 'interviewee'
+}
+
 export interface User {
   id: string;
   email: string;
   name?: string;
   phone?: string;
+  role: UserRole;
 }
 
 export interface ResumeData {

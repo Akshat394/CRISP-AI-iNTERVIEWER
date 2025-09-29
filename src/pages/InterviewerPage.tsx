@@ -11,7 +11,7 @@ const { Header, Content } = Layout;
 const { Title, Text } = Typography;
 const { Search } = Input;
 
-const IntervieweePage: React.FC = () => {
+const InterviewerPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   // const { user } = useAppSelector((state) => state.auth);
@@ -483,4 +483,4 @@ const IntervieweePage: React.FC = () => {
   );
 };
 
-export default IntervieweePage;
+export default InterviewerPage;
