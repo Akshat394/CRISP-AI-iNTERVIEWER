@@ -6,6 +6,7 @@
 CREATE TABLE IF NOT EXISTS users (
   id TEXT PRIMARY KEY,
   email TEXT UNIQUE NOT NULL,
+  password_hash TEXT NOT NULL,
   role TEXT CHECK (role IN ('interviewee', 'interviewer')) DEFAULT 'interviewee',
   name TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW(),
