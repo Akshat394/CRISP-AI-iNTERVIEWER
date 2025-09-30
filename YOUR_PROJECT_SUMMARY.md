@@ -132,7 +132,7 @@ Your Supabase database includes:
 ## 🚀 Ready for Production
 
 When you're ready to deploy:
-1. **Vercel**: Connect GitHub repo, add env vars, deploy
+1. **Netlify**: Connect GitHub repo, add env vars, deploy
 2. **Netlify**: Similar process with build settings
 3. **Self-hosted**: Build and run on your server
 

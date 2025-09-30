@@ -7,7 +7,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/build-passing-brightgreen" />
   <img src="https://img.shields.io/badge/license-MIT-blue" />
-  <img src="https://img.shields.io/badge/deployed-Vercel-black" />
+
 </p>
 
 ---
@@ -46,12 +46,12 @@ Crisp is a next-generation AI-powered interview assistant designed to help candi
 - **Frontend:** React, Redux, Ant Design
 - **Persistence:** redux-persist, IndexedDB
 - **AI Integration:** OpenAI API (or similar)
-- **Deployment:** Vercel/Netlify
+- **Deployment:** Netlify
 
 ---
 
 ## 🚀 Demo
-- **Live Demo:** [crisp-ai.vercel.app](https://crisp-ai.vercel.app) *(replace with your actual link)*
+- **Live Demo:** [Your Demo Link](https://your-demo-link.com) *(replace with your actual link)*
 - **Demo Video:** [Watch on YouTube](https://youtu.be/demo-link) *(replace with your actual link)*
 
 ---

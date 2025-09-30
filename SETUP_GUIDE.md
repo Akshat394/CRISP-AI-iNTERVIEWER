@@ -136,10 +136,10 @@ The platform supports two interview tracks:
 
 ## 🚀 Deployment Options
 
-### Option 1: Vercel (Recommended)
+### Option 1: Netlify (Recommended)
 1. Push code to GitHub
-2. Connect repository to Vercel
-3. Add environment variables in Vercel dashboard
+2. Connect repository to Netlify
+3. Add environment variables in Netlify dashboard
 4. Deploy automatically
 
 ### Option 2: Netlify
