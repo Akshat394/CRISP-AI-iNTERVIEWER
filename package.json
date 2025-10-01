@@ -1,41 +1,4 @@
 {
-<<<<<<< HEAD
-  "name": "crisp-ai",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@ant-design/icons": "^5.2.6",
-    "@reduxjs/toolkit": "^2.2.1",
-    "antd": "^5.14.0",
-    "dayjs": "^1.11.10",
-    "firebase": "^12.3.0",
-    "mammoth": "^1.6.0",
-    "pdfjs-dist": "^4.10.38",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-redux": "^9.1.0",
-    "react-router-dom": "^6.21.1",
-    "redux-persist": "^6.0.0"
-  },
-  "devDependencies": {
-    "@types/react": "^18.2.55",
-    "@types/react-dom": "^18.2.19",
-    "@typescript-eslint/eslint-plugin": "^7.0.2",
-    "@typescript-eslint/parser": "^7.0.2",
-    "@vitejs/plugin-react": "^4.2.1",
-    "eslint": "^8.56.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.5",
-    "typescript": "^5.2.2",
-    "vite": "^6.3.6"
-=======
   "name": "crisp-interview-assistant",
   "version": "1.0.0",
   "private": true,
@@ -77,7 +40,6 @@
     "@radix-ui/react-tooltip": "1.1.6",
     "@supabase/supabase-js": "^2.58.0",
     "@types/bcryptjs": "^2.4.6",
-
     "ai": "latest",
     "autoprefixer": "^10.4.20",
     "bcryptjs": "^3.0.2",
@@ -101,7 +63,7 @@
     "react-dropzone": "latest",
     "react-hook-form": "^7.60.0",
     "react-pdf": "^10.1.0",
-    "react-pdftotext": "^1.3.4",
+    "react-pdftotext": "1.3.4",
     "react-resizable-panels": "^2.1.7",
     "recharts": "2.15.4",
     "sonner": "^1.7.4",
@@ -123,6 +85,5 @@
     "tailwindcss": "^4.1.9",
     "tw-animate-css": "1.3.3",
     "typescript": "^5"
->>>>>>> bf710c2 (Crispy Commits)
   }
 }
