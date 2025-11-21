@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+/* Design Tokens */
+/* Base palette with blue accent */
+:root {
+  --brand-bg-1: #000000; /* Pure black */
+  --brand-bg-2: #111111; /* Very dark gray */
+  --brand-accent: #00ADB5; /* rgb(0,173,181) */
+  --brand-fg: #EEEEEE; /* rgb(238,238,238) */
+  --brand-fg-muted: rgba(238,238,238,0.62);
+  --background: var(--brand-bg-1);
+  --background-alt: var(--brand-bg-2);
+  --foreground: var(--brand-fg);
+  --foreground-muted: var(--brand-fg-muted);
+  --accent: var(--brand-accent);
+  --accent-foreground: #042c2d;
+  --radius-sm: 4px;
+  --radius-md: 10px;
+  --radius-lg: 18px;
+  --border-color: rgba(255,255,255,0.09);
+  --gradient-start: var(--brand-bg-1);
+  --gradient-end: var(--brand-bg-2);
+  --surface-glass: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.025));
+  --shadow-soft: 0 4px 22px -4px rgba(0,0,0,0.55), 0 2px 8px -2px rgba(0,0,0,0.55);
+  --focus-ring: 0 0 0 2px rgba(0,173,181,0.6), 0 0 0 4px rgba(0,173,181,0.25);
+}
+
+/* Theme mapping (removed @theme inline for compatibility) */
+:root {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Dark-only: remove light-mode overrides */
+
+body {
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Glass / Card Surface */
+.glass-surface {
+  background: var(--surface-glass);
+  backdrop-filter: saturate(180%) blur(18px);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+.soft-border { border: 1px solid var(--border-color); }
+
+/* Scrollbars subtle */
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 20px; }
+*::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.18); }
+
+/* Utility animation */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up { animation: fadeInUp 0.45s ease forwards; }
+
+/* Focus ring refinement */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; box-shadow: var(--focus-ring); }
+
+/* Accent utilities */
+.accent-gradient-text { background: linear-gradient(90deg,#EEEEEE 0%,#EEEEEE 40%,#00ADB5 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.badge-accent { background: rgba(0,173,181,0.12); color: #00ADB5; border: 1px solid rgba(0,173,181,0.35); }
+.btn-accent { background:#00ADB5; color:#042c2d; }
+.btn-accent:hover { background:#06c3cc; }
+.surface-subtle { background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03)); }
+
+/* Card subtle divider */
+.card-divider { height:1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent); }
+
+/* Typography tweaks */
+h1,h2,h3,h4 { letter-spacing: -0.02em; }
+code { font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace; }
