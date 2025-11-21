@@ -1,0 +1,50 @@
+{
+	"name": "crisp",
+	"version": "0.1.0",
+	"private": true,
+	"license": "MIT",
+	"author": "<Your Name>",
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "eslint"
+	},
+	"dependencies": {
+		"@google/generative-ai": "^0.21.0",
+		"@langchain/google-genai": "^0.2.18",
+		"@langchain/langgraph": "^0.4.9",
+		"@radix-ui/react-select": "^2.0.0",
+		"@radix-ui/react-slot": "^1.0.2",
+		"@reduxjs/toolkit": "^2.2.7",
+		"class-variance-authority": "^0.7.0",
+		"clsx": "^2.1.1",
+		"langchain": "^0.3.35",
+		"localforage": "^1.10.0",
+		"lucide-react": "^0.453.0",
+		"mammoth": "^1.7.1",
+		"mermaid": "^11.12.0",
+		"mongodb": "^6.9.0",
+		"nanoid": "^5.0.7",
+		"next": "15.5.4",
+		"pdfjs-dist": "^4.10.38",
+		"react": "19.1.0",
+		"react-dom": "19.1.0",
+		"react-redux": "^9.2.0",
+		"redux-persist": "^6.0.0",
+		"tailwind-merge": "^2.5.2",
+		"zod": "^3.23.8"
+	},
+	"devDependencies": {
+		"@eslint/eslintrc": "^3",
+		"@tailwindcss/postcss": "^4",
+		"@types/localforage": "^0.0.34",
+		"@types/node": "^20",
+		"@types/react": "^19",
+		"@types/react-dom": "^19",
+		"eslint": "^9",
+		"eslint-config-next": "15.5.4",
+		"tailwindcss": "^4",
+		"typescript": "^5"
+	}
+}
