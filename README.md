@@ -71,7 +71,7 @@ GEMINI_API_KEY=your_key_here
 GOOGLE_API_KEY=your_key_here
 
 # Optional model override (defaults to gemini-1.5-flash)
-CRISP_GEMINI_MODEL=gemini-2.5-pro
+CRISP_GEMINI_MODEL=gemini-2.5-flash
 
 # MongoDB connection
 MONGODB_URI=mongodb+srv://<user>:<pass>@<cluster>/<db>?retryWrites=true&w=majority
