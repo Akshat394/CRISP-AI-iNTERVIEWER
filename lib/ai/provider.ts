@@ -162,7 +162,7 @@ export async function parseResumeFileGemini(options: { bytes: Uint8Array; mimeTy
 
   const genAI = new GoogleGenerativeAI(getGeminiApiKey());
   const model = genAI.getGenerativeModel({
-    model: process.env.CRISP_GEMINI_MODEL || 'gemini-1.5-flash',
+    model: process.env.CRISP_GEMINI_MODEL || 'gemini-2.5-flash',
     generationConfig: { temperature: 0.1 },
   });
 
@@ -230,7 +230,7 @@ export async function parseResumeFromTextGemini(resumeText: string): Promise<Par
 
   const genAI = new GoogleGenerativeAI(getGeminiApiKey());
   const model = genAI.getGenerativeModel({
-    model: process.env.CRISP_GEMINI_MODEL || 'gemini-1.5-flash',
+    model: process.env.CRISP_GEMINI_MODEL || 'gemini-2.5-flash',
     generationConfig: { temperature: 0.1 },
   });
 

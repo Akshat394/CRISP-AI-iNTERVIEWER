@@ -15,7 +15,7 @@ function getGeminiApiKey() {
 // Simple factory to create Google Generative AI model
 export function makeChatModel() {
   const apiKey = getGeminiApiKey();
-  const modelName = process.env.CRISP_GEMINI_MODEL || 'gemini-1.5-flash';
+  const modelName = process.env.CRISP_GEMINI_MODEL || 'gemini-2.5-flash';
   debugLog('Creating GenerativeModel with API key present:', !!apiKey);
   debugLog('Using model:', modelName);
   
