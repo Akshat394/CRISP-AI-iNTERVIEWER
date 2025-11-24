@@ -83,7 +83,7 @@ export default function SiteHeader() {
 
 				<div className="ml-auto flex items-center gap-3">
 					<a
-						href="https://github.com/tashifkhan/CRISP-interview-assistant"
+						href="https://github.com/Akshat394/CRISP-AI-iNTERVIEWER"
 						target="_blank"
 						rel="noopener noreferrer"
 						className="hidden sm:inline-flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-medium text-[var(--foreground-muted)] transition-colors hover:text-[var(--foreground)] hover:bg-white/10"
@@ -134,7 +134,7 @@ export default function SiteHeader() {
 							</Link>
 						))}
 						<a
-							href="https://github.com/tashifkhan/CRISP-interview-assistant"
+							href="https://github.com/Akshat394/CRISP-AI-iNTERVIEWER"
 							target="_blank"
 							rel="noopener noreferrer"
 							className="mt-2 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-medium text-[var(--foreground-muted)] hover:text-[var(--foreground)] hover:bg-white/10"

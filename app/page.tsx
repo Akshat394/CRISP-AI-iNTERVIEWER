@@ -64,7 +64,7 @@ export default function Home() {
 						View Dashboard
 					</Link>
 					<a
-						href="https://github.com/tashifkhan/CRISP-interview-assistant"
+						href="https://github.com/Akshat394/CRISP-AI-iNTERVIEWER"
 						target="_blank"
 						rel="noopener noreferrer"
 						className="px-7 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-[var(--foreground-muted)] text-sm font-medium border border-white/10 transition-colors"

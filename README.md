@@ -288,9 +288,9 @@ Add screenshots to showcase the UI and features.
 
 ## Author & Contact
 
-- Name: Your Name
-- LinkedIn: your‑linkedin
-- Email: your‑email
+- Name: Akshat Trivedi
+- LinkedIn: https://www.linkedin.com/in/akshat-trived1/
+- Email: akshattrivedi394@gmail.com
 
 ## Deployment
 
